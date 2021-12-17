@@ -1,0 +1,6 @@
+
+input_csv: "s3://htan-project-tower-bucket/staging/queue.csv"
+miniature: true
+minerva: true
+outdir: "s3://htan-project-tower-bucket/outputs"
+synapseconfig: "s3://htan-project-tower-bucket/.synapseConfig"

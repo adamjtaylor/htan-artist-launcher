@@ -1,0 +1,6 @@
+.token
+logs/*
+assets/*
+tmp/*
+manifest.csv
+skiplist.csv
