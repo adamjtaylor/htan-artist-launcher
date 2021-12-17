@@ -76,6 +76,7 @@ write_csv(updated_manifest, paste0("tmp/updated-", args$manifest))
 #    write_csv("tmp/makeminerva.csv", col_names = FALSE)
 
 updated_manifest %>%
+    filter(is.na(thumbnail) | is.na(minerva)) %>%
     filter(!synid %in% known_issues$synid ) %>%
     select(synid) %>%
     write_csv("tmp/all.csv", col_names = FALSE)
