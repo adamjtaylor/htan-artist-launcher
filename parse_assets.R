@@ -17,3 +17,16 @@ data = read_tsv('./assets/htan-assets-bucket.tsv', col_names = c("bucket", "key"
     )
 
 write_csv(data, './assets/htan-assets-tidy.csv')
+
+latest <- data %>%
+   group_by(synid, type) %>%
+    filter(modified == max(modified))
+    
+write_csv(latest, "assets/htan-assets-latest.csv")
+
+latest %>%
+    ungroup() %>%
+    select(-s3_uri,-version, -modified,-bucket,-key) %>%
+    pivot_wider(names_from = type, values_from = cloudfront_url) %>%
+    jsonlite::write_json('assets/htan-assets-latest.json')
+

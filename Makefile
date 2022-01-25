@@ -25,12 +25,14 @@ map:
 # a list that need thumbnails
 # a list that needs minerva stories
 	Rscript manifest-assets.R \
-		--manifest manifest.csv \
+		--manifest ome_tiff_synids.csv \
 		--assets assets/htan-assets-tidy.csv \
 		--skip skiplist.csv
 
+
+
 stage:
-# Copy the queue to s3
+# Copy the queue(s) to s3
 	aws s3 cp \
 		--profile sandbox-developer \
 		tmp/all.csv \
@@ -60,9 +62,26 @@ check:
 		--workspace=${WORKSPACEID} \
 		> tmp/runview.json
 
+# When complete
+# Get the log files for a run
+
+
+# Copy the files to htan-dev bucket
+transfer:
+	runName=$$(cat 'tmp/runview.json' | jq -r ".general.runName"); \
+		aws s3 cp \
+			--profile sandbox-developer \
+			"s3://htan-project-tower-bucket/outputs/$$runName/" \
+			"s3://htan-assets/synid/" \
+			--recursive \
+			> tmp/transfer.log
+	Rscript parse_transfer_log.R
+
+annotate:
+
 archive:
 # Archive into a folder named by workflowId
-	workflowId=$$(cat 'tmp/launched.json' | jq -r ".workflowId"); \
-	mkdir logs/$${workflowId}; \
-	mv tmp/* logs/$${workflowId}/
+	runName=$$(cat 'tmp/runview.json' | jq -r ".general.runName"); \
+	mkdir logs/$${runName}; \
+	mv tmp/* logs/$${runName}/
 
