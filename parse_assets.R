@@ -28,5 +28,5 @@ latest %>%
     ungroup() %>%
     select(-s3_uri,-version, -modified,-bucket,-key) %>%
     pivot_wider(names_from = type, values_from = cloudfront_url) %>%
-    jsonlite::write_json('assets/htan-assets-latest.json')
+    jsonlite::write_json('assets/htan-imaging-assets.json', pretty = TRUE)
 
