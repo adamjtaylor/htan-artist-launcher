@@ -1,14 +1,13 @@
 library(tidyverse)
 
-transfer_log <- read_csv('tmp/transfer.log', col_names = "log_entry")
+transfer_log <- vroom::vroom('tmp/transfer.log', col_names = c("log_entry", "prefix", "from","to"), delim = ":")
 succeeded <- transfer_log %>%
-    extract(
-        log_entry,
-        into = c("from", "to"),
-        regex = "(s3.*)\ to\ (s3.*$)"
+    mutate(
+        from = paste(prefix,from,sep = ":"),
+        to = paste(prefix,to,sep = ":"),
     ) %>%
     filter(
-        str_detect(from, "thumbnail.png") | 
+        str_detect(from, "thumbnail") | 
         str_detect(from, "minerva/index.html")
     ) %>%
     mutate(
@@ -31,6 +30,3 @@ success_fail_log <- succeeded %>%
     full_join(submitted) %>%
     mutate_all(replace_na, "failed") %>%
     write_csv("tmp/success_fail_log.csv")
-
-success_fail_log %>% 
-    count(minerva, thumbnail)

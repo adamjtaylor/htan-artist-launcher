@@ -1,0 +1,8 @@
+
+input_csv: "/Users/ataylor/Documents/projects/htan/htan-artist-launcher/tmp/all.csv"
+miniature: true
+minerva: false
+outdir: "≈/Users/ataylor/Documents/projects/htan/htan-artist-launcher/tmp/test/"
+he: false
+keep-bg: false
+bioformats2ometiff: false

@@ -10,7 +10,7 @@ args <- R.utils::commandArgs(
 cloudflare_prefix = "https://d3p249wtgzkn5u.cloudfront.net"
 
 manifest <- read_csv(args$manifest, show_col_types = FALSE) %>%
-    rename(synid = synapseId) %>%
+    #rename(synid = synapseId) %>%
     select(synid, minerva, thumbnail) %>%
     pivot_longer(
         -synid,
@@ -54,10 +54,10 @@ updated_manifest <- manifest %>%
         values_from = manifest_uri
     )
 
-write_csv(updated_manifest, paste0("tmp/updated-", args$manifest))
+write_csv(updated_manifest, paste0("tmp/updated-", basename(args$manifest)))
     
     
-#updated_manifest %>%
+#pdated_manifest %>%
 #    filter(is.na(thumbnail) & is.na(minerva)) %>%
 #    filter(!synid %in% known_issues$synid ) %>%
 #    select(synid) %>%

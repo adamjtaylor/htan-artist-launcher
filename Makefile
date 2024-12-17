@@ -1,7 +1,10 @@
 NAME=htan-asset-mapping
 include .token
 
-all: list map stage launch check archive
+
+taxi: list map
+takeoff: stage launch check
+land: log transfer archive
 
 list:
 # List all the objects in the htan-assets bucket
@@ -25,7 +28,7 @@ map:
 # a list that need thumbnails
 # a list that needs minerva stories
 	Rscript manifest-assets.R \
-		--manifest ome_tiff_synids.csv \
+		--manifest visium.csv \
 		--assets assets/htan-assets-tidy.csv \
 		--skip skiplist.csv
 
@@ -34,7 +37,7 @@ map:
 stage:
 # Copy the queue(s) to s3
 	aws s3 cp \
-		--profile sandbox-developer \
+		--profile tower \
 		tmp/all.csv \
 		s3://htan-project-tower-bucket/staging/queue.csv
 
@@ -61,23 +64,40 @@ check:
 		--id=$$workflowId \
 		--workspace=${WORKSPACEID} \
 		> tmp/runview.json
-
+		
 # When complete
 # Get the log files for a run
+log: 
+# Check it has been submitted and save details
+	workflowId=$$(cat 'tmp/launched.json' | jq -r ".workflowId"); \
+	tw \
+		--access-token=${TOKEN} \
+		--url=https://tower.sagebionetworks.org/api \
+		--output=json \
+		runs view \
+		--config  --params --command --status --load --utilization --metrics-memory --metrics-cpu --metrics-time --metrics-io \
+		--id=$$workflowId \
+		--workspace=${WORKSPACEID} \
+		> tmp/runview.json
 
-
-# Copy the files to htan-dev bucket
+# Copy the files to htan-dev bucket and update assets
 transfer:
 	runName=$$(cat 'tmp/runview.json' | jq -r ".general.runName"); \
 		aws s3 cp \
-			--profile sandbox-developer \
+			--profile htan-dev \
+			--acl bucket-owner-full-control \
 			"s3://htan-project-tower-bucket/outputs/$$runName/" \
 			"s3://htan-assets/synid/" \
 			--recursive \
 			> tmp/transfer.log
 	Rscript parse_transfer_log.R
+	make list
 
 annotate:
+
+
+montage: 
+	
 
 archive:
 # Archive into a folder named by workflowId

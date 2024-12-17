@@ -3,7 +3,9 @@ import synapseclient
 syn = synapseclient.Synapse()
 syn.login()
 
-ImagingLevel2 = syn.tableQuery("SELECT * FROM syn20446927 WHERE ((\"Component\"='ImagingLevel2'))").asDataFrame()
+Manifests = syn.tableQuery("SELECT * FROM syn20446927 WHERE (\"name\"='synapse_storage_manifest.csv')").asDataFrame()
+
+ImagingLevel2 = syn.tableQuery("SELECT * FROM syn20446927 WHERE ((\"Component\"='ImagingLevel2') AND (\"benefactorId\"!='HTAN HTAPP'))").asDataFrame()
 
 
 ome_tiff_regex = '.*\.ome.tif{1,2}$'

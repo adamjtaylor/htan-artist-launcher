@@ -4,3 +4,6 @@ miniature: true
 minerva: true
 outdir: "s3://htan-project-tower-bucket/outputs"
 synapseconfig: "s3://htan-project-tower-bucket/.synapseConfig"
+he: true
+keep-bg: true
+bioformats2ometiff: true

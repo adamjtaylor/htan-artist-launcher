@@ -1,6 +1,7 @@
 import sys
 import argparse
 import boto3
+import re
 
 def process_args():
     parser = argparse.ArgumentParser(description='')
@@ -32,13 +33,16 @@ def main():
     # List bucket items
     bucket = s3.Bucket(bucket_name)
     for f in bucket.objects.all():
-        # Keys should be keys
-        key = f.key
-        modified = f.last_modified
-        if bucket_type == 'gcs':
-            key = key.replace('+', ' ')
+        if re.match(r'.+minerva.+\.jpg$', f.key):
+            continue
+        else:
+            # Keys should be keys
+            key = f.key
+            modified = f.last_modified
+            if bucket_type == 'gcs':
+                key = key.replace('+', ' ')
 
-        print('\t'.join((bucket_name, key, str(modified))))
+            print('\t'.join((bucket_name, key, str(modified))))
 
 
 if __name__ == '__main__':
