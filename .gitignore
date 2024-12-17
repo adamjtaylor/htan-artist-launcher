@@ -2,3 +2,4 @@ samplesheet/*
 params/*
 archive/*
 .DS_Store
+.nextflow*

@@ -46,6 +46,7 @@ run_name = "hello-world-seqerakit"
 
 # Read the samplehseet
 samplesheet = "samplesheet/artist-samplesheet.csv"
+# samplesheet = "samplesheet/artist-samplesheet-sample10.csv"
 
 # Submit the df as a Sequera samplesheet
 
@@ -80,7 +81,7 @@ dataset_url = tw.datasets(
 )
 # write a params.yaml
 params = f"""
-input: "{dataset_url['datasetUrl']}"
+input: {dataset_url['datasetUrl']}
 outdir: "s3://htan-project-tower-bucket/outputs/{run_name}"
 """
 
@@ -101,6 +102,8 @@ pipeline_run = tw.launch(
     "--wait",
     "SUBMITTED",
     "https://github.com/Sage-Bionetworks-Workflows/nf-artist",
+    "--profile",
+    "tower",
     "--params-file",
     params_name,
     to_json=True,
