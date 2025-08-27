@@ -24,7 +24,16 @@ DEFAULT_BQ_PROJECT = "htan-dcc"
 DEFAULT_OUTPUT_DIR = Path("samplesheet")
 DEFAULT_SAMPLE_SIZE = 10
 
-# BigQuery SQL query
+#
+# Query retrieves released ImagingLevel2 entities from BigQuery.
+# Joins the entities table with ImagingLevel2 assay metadata to pull:
+#   • entityId (id)
+#   • cloud storage path of the image
+#   • a boolean flag for H&E assay type
+#   • a convert flag (true if not an OME-TIFF file)
+#   • imaging assay type
+#   • originating HTAN center
+# Filters out MERFISH assay types and data from the HTAPP center.
 BIGQUERY_QUERY = """
 SELECT 
     e.entityId as id, 
