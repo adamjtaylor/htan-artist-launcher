@@ -1,0 +1,9 @@
+requests
+pandas
+boto3
+google-cloud-bigquery
+google-cloud-storage
+db-dtypes
+seqerakit
+shortuuid
+dotenv

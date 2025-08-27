@@ -1,1 +1,0 @@
-python shortlist.py && python launch.py

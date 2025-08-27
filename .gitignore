@@ -3,3 +3,8 @@ params/*
 archive/*
 .DS_Store
 .nextflow*
+*.pem
+htan-imaging-assets-latest.json
+.venv/*
+.env
+ssh_transfer_ec2.sh
