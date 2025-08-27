@@ -26,7 +26,7 @@ DEFAULT_WORKSPACE = "253119656982040"  # htan-project
 DEFAULT_COMPUTE_ENV = "3k6bQPIqpII2nGlDMbc9Mv"  # htan-project-spot-v12
 DEFAULT_API_URL = "https://tower.sagebionetworks.org/api"
 DEFAULT_PIPELINE_URL = "https://github.com/Sage-Bionetworks-Workflows/nf-artist"
-DEFAULT_SAMPLESHEET = "samplesheet/artist-samplesheet-sample10.csv"
+DEFAULT_SAMPLESHEET = "samplesheet/artist-samplesheet.csv"
 DEFAULT_OUTPUT_BUCKET = "s3://htan-project-tower-bucket/outputs"
 
 # Initialize short UUID generator
