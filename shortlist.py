@@ -153,8 +153,8 @@ def process_dataframe(
     minerva_dict = {item["synid"]: item.get("minerva", "") for item in assets_data}
     thumbnail_dict = {item["synid"]: item.get("thumbnail", "") for item in assets_data}
 
-    df["minerva_uri"] = df["id"].map(minerva_dict).fillna("")
-    df["miniature_uri"] = df["id"].map(thumbnail_dict).fillna("")
+    # df["minerva_uri"] = df["id"].map(minerva_dict).fillna("")
+    # df["miniature_uri"] = df["id"].map(thumbnail_dict).fillna("")
 
     # Extract cloud provider from image path
     df["cloud_provider"] = df["image"].str.extract(r"(s3|gs)://")
@@ -205,14 +205,14 @@ def save_samplesheets(df: pd.DataFrame, output_dir: Path, sample_size: int) -> N
 
     # Save full samplesheet
     full_path = output_dir / "artist-samplesheet.csv"
-    df.to_csv(full_path, index=False, quoting=1)
+    df.to_csv(full_path, index=False)
     logging.info(f"Saved full samplesheet with {len(df)} records to {full_path}")
 
     # Save sample samplesheet
     if len(df) > sample_size:
         df_sample = df.sample(sample_size)
         sample_path = output_dir / f"artist-samplesheet-sample{sample_size}.csv"
-        df_sample.to_csv(sample_path, index=False, quoting=1)
+        df_sample.to_csv(sample_path, index=False)
         logging.info(
             f"Saved sample samplesheet with {sample_size} records to {sample_path}"
         )
