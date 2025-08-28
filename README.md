@@ -1,6 +1,6 @@
 # HTAN Artist Pipeline Launcher
 
-A comprehensive toolkit for launching the HTAN Artist pipeline on Seqera Platform to generate thumbnails and Minerva stories for imaging data.
+A comprehensive toolkit for launching the [nf-artist](https://github.com/Sage-Bionetworks-Workflows/nf-artist) pipeline on Seqera Platform to generate thumbnails and Minerva stories for imaging data.
 
 ## 🎯 Overview
 
@@ -32,7 +32,7 @@ This toolkit provides two main scripts:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/adamjtaylor/htan-artist-launcher.git
+git clone https://github.com/ncihtan/htan-artist-launcher.git
 cd htan-artist-launcher
 ```
 
